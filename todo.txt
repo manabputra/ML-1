@@ -1,0 +1,1 @@
+we need to create a dictionary of all the different item types and other different types of things., to convert from a text type to some number
