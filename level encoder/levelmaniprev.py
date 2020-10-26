@@ -1,3 +1,5 @@
+
+
 class Item:
     properties = []
 
@@ -15,6 +17,27 @@ class Connection:
     
     def printprops(self):
         print(self.properties)
+
+class Voxel:
+    def __init__(self, solid, portal0, portal1, portal2):
+        self.solid = solid
+        self.portal0 = portal0
+        self.portal1 = portal1
+        self.portal2 = portal2
+    
+    def setSolid(self, solid):
+        self.solid = solid
+    
+    def setPortal0(self, portal0):
+        self.portal0 = portal0
+
+    def setPortal1(self, portal1):
+        self.portal1 = portal1
+
+    def setPortal2(self, portal2):
+        self.portal2 = portal2
+    
+    
 
 
 
@@ -144,5 +167,155 @@ print(len(itemList))
 print(len(connectionList))
 itemList[2].printprops()
 level.close()
+
+level = open("1602637452.p2c", 'r+b')
+x = 0
+y = 0
+z = 0
+
+for line in level:
+    if(str(line).find("ChamberSize") != -1):
+        tempLine = line
+        letter = tempLine[17:18]
+        i = 17
+        while(letter != b" "):
+            x = x*10 + int(letter.decode("utf-8"))
+            i = i + 1
+            letter = tempLine[i:i+1]
+        i = i + 1
+        letter = tempLine[i:i+1]
+        while(letter != b" "):
+            y = y*10 + int(letter.decode("utf-8"))
+            i = i + 1
+            letter = tempLine[i:i+1]
+        i = i + 1
+        letter = tempLine[i:i+1]
+        while(letter != b'"'):
+            z = z*10 + int(letter.decode("utf-8"))
+            i = i + 1
+            letter = tempLine[i:i+1]
+        break
+
+print(x)
+print(y)
+print(z)
+X = []
+Y = []
+Z = []
+for line in level:
+    
+    if((str(line).find("Solid") != -1)):
+        for line in level:
+            tempLine = line
+            #print(tempLine)
+            if(str(tempLine).find("f") != -1):
+                i = 12
+                #print(i)
+                letter = tempLine[i:i+1]
+                while(letter != b'"'):
+                    print(letter)
+                    X.append(Voxel(int(letter.decode("utf-8")),1,1,1))
+                    i = i + 1
+                    letter = tempLine[i:i+1]
+                #print("Length of X" + str(len(X)))
+                Y.append(X)
+                X = []
+            elif(str(tempLine).find("}") != -1):
+                #print("Length of Y" + str(len(Y)))
+                Z.append(Y)
+                Y = []
+            elif(str(tempLine).find("Portal0") != -1):
+                #print(len(Z))
+                break
+        
+        xIter = 0
+        yIter = 0
+        zIter = 0
+
+        for line in level:
+            tempLine = line
+            print(tempLine)
+            if(str(tempLine).find("f") != -1):
+                i = 12
+                #print(i)
+                letter = tempLine[i:i+1]
+                while(letter != b'"'):
+                    print(letter)
+                    Z[zIter][yIter][xIter].setPortal0(int(letter.decode("utf-8")))
+                    xIter = xIter + 1
+                    i = i + 1
+                    letter = tempLine[i:i+1]
+                #print("Length of X" + str(len(X)))
+                yIter = yIter + 1
+                xIter = 0
+            elif(str(tempLine).find("}") != -1):
+                #print("Length of Y" + str(len(Y)))
+                zIter = zIter + 1
+                yIter = 0
+            elif(str(tempLine).find("Portal1") != -1):
+                #print(len(Z))
+                break
+        
+        xIter = 0
+        yIter = 0
+        zIter = 0
+
+        for line in level:
+            tempLine = line
+            print(tempLine)
+            if(str(tempLine).find("f") != -1):
+                i = 12
+                #print(i)
+                letter = tempLine[i:i+1]
+                while(letter != b'"'):
+                    print(letter)
+                    Z[zIter][yIter][xIter].setPortal1(int(letter.decode("utf-8")))
+                    xIter = xIter + 1
+                    i = i + 1
+                    letter = tempLine[i:i+1]
+                #print("Length of X" + str(len(X)))
+                yIter = yIter + 1
+                xIter = 0
+            elif(str(tempLine).find("}") != -1):
+                #print("Length of Y" + str(len(Y)))
+                zIter = zIter + 1
+                yIter = 0
+            elif(str(tempLine).find("Portal2") != -1):
+                #print(len(Z))
+                break
+
+        xIter = 0
+        yIter = 0
+        zIter = 0
+
+        for line in level:
+            tempLine = line
+            print(tempLine)
+            if(str(tempLine).find("f") != -1):
+                i = 12
+                #print(i)
+                letter = tempLine[i:i+1]
+                while(letter != b'"'):
+                    print(letter)
+                    Z[zIter][yIter][xIter].setPortal2(int(letter.decode("utf-8")))
+                    xIter = xIter + 1
+                    i = i + 1
+                    letter = tempLine[i:i+1]
+                #print("Length of X" + str(len(X)))
+                yIter = yIter + 1
+                xIter = 0
+            elif(str(tempLine).find("}") != -1):
+                #print("Length of Y" + str(len(Y)))
+                zIter = zIter + 1
+                yIter = 0
+            elif(str(tempLine).find("Items") != -1):
+                #print(len(Z))
+                break
+
+            
+
+
+
+                
 
 
