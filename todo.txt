@@ -1,1 +1,7 @@
-we need to create a dictionary of all the different item types and other different types of things., to convert from a text type to some number
+1. we need to create a dictionary of all the different item types and other different types of things
+, to convert from a text type to some number
+
+2. This needs to be tidied up with a final level class with the item, connection and voxel array
+
+3. we should also consider the creation of some meta features, eg. number of items, number of connections, ratio of solid voxels vs
+total voxal, stuff like that.
